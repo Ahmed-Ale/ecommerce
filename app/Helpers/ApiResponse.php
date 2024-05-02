@@ -12,4 +12,12 @@ class ApiResponse
             'data' => $data
         ], $status);
     }
+    public static function not_found($something = 'data')
+    {
+        return response()->json([
+            'status' => 404,
+            'message' => $something . ' Not Found',
+            'data' => [],
+        ], 404);
+    }
 }

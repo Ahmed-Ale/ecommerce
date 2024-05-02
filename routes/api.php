@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BrandController;
+use App\Http\Controllers\Api\CategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -31,7 +32,17 @@ Route::controller(BrandController::class)->prefix('brands')->group(function () {
     Route::get('/{id}', 'show');
     Route::middleware(['auth:sanctum', 'isAdmin'])->group(function () {
         Route::post('store', 'store');
-        Route::post('update/{id}', 'update');
-        Route::get('delete/{id}', 'destroy');
+        Route::put('update/{id}', 'update');
+        Route::delete('delete/{id}', 'destroy');
+    });
+});
+
+Route::controller(CategoryController::class)->prefix('categories')->group(function () {
+    Route::get('/', 'index');
+    Route::get('/{id}', 'show');
+    Route::middleware(['auth:sanctum', 'isAdmin'])->group(function () {
+        Route::post('store', 'store');
+        Route::put('update/{id}', 'update');
+        Route::delete('delete/{id}', 'destroy');
     });
 });

@@ -12,14 +12,14 @@ class BrandController extends Controller
     public function index()
     {
         $brands = Brand::all();
-        if (count($brands) == 0) return ApiResponse::response(404, 'there Is NO Brands', []);
+        if (count($brands) == 0) return ApiResponse::not_found('Brands');
         return ApiResponse::response(200, 'Brands Retrived Successfully', $brands);
     }
 
     public function show($id)
     {
         $brand = Brand::find($id);
-        if (!$brand) return ApiResponse::response(404, 'Brand Not Found', []);
+        if (!$brand) return ApiResponse::not_found('Brand');
         return ApiResponse::response(200, 'Brand Retrived Successfully', $brand);
     }
 
@@ -38,14 +38,14 @@ class BrandController extends Controller
             'name' => 'required|string|max:255',
         ]);
         $brand = Brand::find($id);
-        if (!$brand) return ApiResponse::response(404, 'Brand Not Found', []);
+        if (!$brand) return ApiResponse::not_found('Brand');
         $brand->update(['name' => $request->name]);
         return ApiResponse::response(200, 'Brand Updated Successfully', $brand);
     }
     public function destroy($id)
     {
         $brand = Brand::find($id);
-        if (!$brand) return ApiResponse::response(404, 'Brand Not Found', []);
+        if (!$brand) return ApiResponse::not_found('Brand');
         $brand->delete();
         return ApiResponse::response(200, 'Brand Deleted Successfully', []);
     }
