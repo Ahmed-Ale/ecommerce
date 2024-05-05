@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BrandController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\LocationController;
+use App\Http\Controllers\Api\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -47,9 +48,20 @@ Route::controller(CategoryController::class)->prefix('categories')->group(functi
         Route::delete('delete/{id}', 'destroy');
     });
 });
+
 Route::controller(LocationController::class)->prefix('location')->middleware('auth:sanctum')->group(function () {
     Route::get('/{id}', 'show');
     Route::post('store', 'store');
     Route::put('update/{id}', 'update');
     Route::delete('delete/{id}', 'destroy');
+});
+
+Route::controller(ProductController::class)->prefix('products')->group(function () {
+    Route::get('/', 'index');
+    Route::get('/{id}', 'show');
+    Route::middleware(['auth:sanctum', 'isAdmin'])->group(function () {
+        Route::post('store', 'store');
+        Route::put('update/{id}', 'update');
+        Route::delete('delete/{id}', 'destroy');
+    });
 });
