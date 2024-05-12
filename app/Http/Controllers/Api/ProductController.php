@@ -47,7 +47,7 @@ class ProductController extends Controller
                 'brand_id' => $request->brand_id,
             ]);
 
-            return ApiResponse::response(200, 'Product Created Successfully', $product);
+            return ApiResponse::response(201, 'Product Created Successfully', $product);
         } catch (\Exception $e) {
             return ApiResponse::response(500, 'Error creating product: ' . $e->getMessage());
         }
