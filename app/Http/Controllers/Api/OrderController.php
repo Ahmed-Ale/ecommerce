@@ -22,7 +22,7 @@ class OrderController extends Controller
     public function show($id)
     {
         $order = Order::find($id)->with(['user', 'items'])->firstOrFail();
-        if ($order->user_id !== Auth::id() && Auth::user()->is_admin) {
+        if ($order->user_id !== Auth::id() || !Auth::user()->is_admin) {
             return ApiResponse::response(403, 'Unauthorized');
         }
         if (!$order) return ApiResponse::not_found('Order');
