@@ -68,17 +68,17 @@ Route::controller(ProductController::class)->prefix('products')->group(function 
 });
 
 Route::controller(OrderController::class)->prefix('orders')->group(function () {
-    // Authenticated routes for order management
     Route::middleware(['auth:sanctum'])->group(function () {
-        Route::get('/', 'index'); // List orders (usually for users)
-        Route::get('/{order}', 'show'); // View specific order details
-        Route::post('/', 'store'); // Create a new order (typically from checkout)
+        Route::get('/', 'index');
+        Route::get('show/{order}', 'show');
+        Route::post('store', 'store');
     });
 
-    // Admin-specific routes (assuming roles or permissions for authorization)
-    Route::middleware(['auth:sanctum', 'isAdmin'])->group(function () {
-        Route::get('/all', 'getAllOrders'); // List all orders (for admins)
-        Route::put('/{order}', 'update'); // Update order details (e.g., status)
-        Route::delete('/{order}', 'destroy'); // Delete an order (usually for admins)
+    Route::middleware(['auth:sanctum', 'isAdmin'])->prefix('admin')->group(function () {
+        Route::get('/', 'index');
+        Route::get('show/{order}', 'show');
+        Route::get('get_order_items/{id}', 'getOrderItems');
+        Route::get('get_user_orders/{id}', 'getUserOrders');
+        Route::put('change_order_status/{id}', 'changeOrderStatus');
     });
 });
