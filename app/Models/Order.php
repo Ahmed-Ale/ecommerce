@@ -4,15 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\OrderItem;
 
 class Order extends Model
 {
     use HasFactory;
     protected $fillable = [
         'user_id',
-        'product_id',
         'location_id',
-        'date of delivery',
+        'date_of_delivery',
         'quantity',
         'price',
         'status',
@@ -24,10 +24,15 @@ class Order extends Model
     }
     public function product()
     {
-        return $this->belongsTo(Product::class);
+        return $this->hasMany(Product::class);
     }
     public function location()
     {
         return $this->belongsTo(Location::class);
+    }
+
+    public function items()
+    {
+        return $this->hasMany(OrderItem::class);
     }
 }
